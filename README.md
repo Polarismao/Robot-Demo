@@ -1,2 +1,2 @@
-# Four-wheeled-robot
-麦克纳姆轮机器人代码，汇总优秀代码经验。
+# robot-demo
+机器人demo代码，同时汇总优秀代码经验，各个模块集成。
