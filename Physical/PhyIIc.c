@@ -1,4 +1,5 @@
 #include "stm32f10x.h"
+#include "PhyPublic.h"
 #include "PhyIIc.h"
 #include "PCA9685.h"
 
