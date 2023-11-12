@@ -1,8 +1,6 @@
+#include "stm32f10x.h"
 #include "PhyCan.h"
-
-void CAN_Configuartion(u8 can_baut,u16 Acr, u16 Amr);
-void physical_can_deal(unsigned long can_Id,unsigned char uc_exId, unsigned char can_data_lenth,unsigned char *can_data);
-void USB_LP_CAN1_RX0_IRQHandler(void);
+#include "PhyPublic.h"
 
 /*************************************************************
 *@brief¡¾CANÄ£¿éÅäÖÃ¡¿
@@ -13,7 +11,7 @@ void USB_LP_CAN1_RX0_IRQHandler(void);
 *@date   2023-11-09
 *@note ¡¾±¸×¢¡¿
 *************************************************************/
-void CAN_Configuartion(u8 can_baut,u16 Acr, u16 Amr)
+void CAN_Configuartion(unsigned char can_baut, unsigned short Acr, unsigned short Amr)
 {									 
 	NVIC_InitStructure.NVIC_IRQChannel = USB_LP_CAN1_RX0_IRQn; //CAN
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;

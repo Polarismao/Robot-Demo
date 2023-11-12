@@ -50,11 +50,12 @@ void LgMain_Init(void)
 void LgMain_2msDeal(void)
 {
     ObjPCA_servoAngleSet(15, us_pwmSet);
+	
 	switch(deal_step)
 	{
 		case 0:
 		{
-			object_232_deal();
+			//object_232_deal();
 			deal_step++;
 			break;
 		}

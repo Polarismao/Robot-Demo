@@ -40,27 +40,70 @@
 #define CF_10MINS (600000)
 #define CF_24H    (86400000) //24H
 
+
+/**************************事件帧*****************************/
+#define	 FRM100IDE60_FDOOR		   		0
+#define	 FRM100IDE61_FDOOR		   		1
+#define	 FRM100IDE62_FDOOR		   		2
+#define	 FRM100IDE63_FDOOR		   		3
+#define	 FRM100IDE64_FDOOR		   		4
+#define	 FRM100IDE65_FDOOR              5 
+#define	 FRM100IDE66_FDOOR              6
+#define	 FRM100IDE67_FDOOR              7
+
+#define  CF_INSERT_MAX1                 8
+
+void delay_ms(unsigned short nms);
+void delay_us(unsigned int nus);
+
 #define GetTime()		    ((SysTick->VAL) << 8)
 #define SYSTEM_CLOCK_100    (7200000000)
 #define TIME_1US            (72UL<<8)
 #define TIME_500US          (TIME_1US * 500)
 #define TIME_1MS            (TIME_1US * 1000)
 
-void delay_ms(unsigned short nms);
-void delay_us(unsigned int nus);
+unsigned short deal_step;
+unsigned short bTimerHalfMs;
+unsigned short bTimer1ms;
+unsigned short bTimer2ms;
+unsigned short timerTicker;
+unsigned short timerTickerHalfMsOld;
+unsigned short timerTicker1msOld;
+unsigned short timerTicker2msOld;
 
 /*****************************************CAN模块*******************************************/
 typedef struct
 {
-	unsigned char  uc_exId;		  //增加扩展帧标记
-	unsigned long  COB_ID;		  //功能帧
-	unsigned char  Data[8];       //发送帧数据
-	unsigned char  DLC;           //帧长度
-	unsigned long  ul_funId;
+	unsigned long COB_ID;
+	unsigned char uc_exId;
+	unsigned char DLC;
+	unsigned char Data[8];
+	unsigned long ul_funId;
 	unsigned short us_subId;
-    unsigned short us_landing;
-    unsigned char  uc_doorFlag;
-}CAN_FRAME2515;
+	unsigned short us_doorType;
+	unsigned char uc_tgtAddr;
+}CF_CAN;
+
+struct CF_INSERT
+{
+	unsigned long ul_funId;
+	unsigned short us_subId;
+	unsigned char uc_exId;
+	unsigned short us_tickLeft;
+	unsigned short us_timeLimit;
+	unsigned short us_timeCur;
+	unsigned short us_waitPercent;
+};
+
+extern struct CF_INSERT st_cf_insertReq[CF_INSERT_MAX1];
+extern CF_CAN st_cf_rcecFrame;
+extern CF_CAN st_cf_sendFrame;
+
+extern unsigned long ul_phyCan_rxId[4];
+extern unsigned char uc_phyCan_exId[4];
+extern unsigned char uc_phyCan_rxLen[4];
+extern unsigned char uc_phyCan_rxMessage[4][8];	
+extern unsigned char uc_phyCan_rxFlag[4];
 
 #endif
 

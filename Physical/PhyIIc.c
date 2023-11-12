@@ -1,7 +1,7 @@
 #include "stm32f10x.h"
-#include "PhyPublic.h"
+//#include "PhyPublic.h"
 #include "PhyIIc.h"
-#include "PCA9685.h"
+#include "ObjPCA9685.h"
 
 /*************************************************************
 *@brief【IIC外设初始化】
@@ -90,7 +90,6 @@ void I2C_ByteWrite(unsigned char uc_data, unsigned char uc_writeAddr)
     {
         if ((I2CTimeout--) == 0)   
         {
-            us_IIC_result = 1;
             return;
         }
     }
@@ -104,7 +103,6 @@ void I2C_ByteWrite(unsigned char uc_data, unsigned char uc_writeAddr)
     {
         if ((I2CTimeout--) == 0)
         {
-            us_IIC_result = 2;
             return;
         }
     }
@@ -118,7 +116,6 @@ void I2C_ByteWrite(unsigned char uc_data, unsigned char uc_writeAddr)
     {
         if ((I2CTimeout--) == 0)
         {
-            us_IIC_result = 3;
             return;
         }
     }
@@ -131,7 +128,6 @@ void I2C_ByteWrite(unsigned char uc_data, unsigned char uc_writeAddr)
     {
         if ((I2CTimeout--) == 0)
         {
-            us_IIC_result = 4;
             return;
         }
     }
@@ -158,7 +154,6 @@ unsigned char I2C_ByteRead(unsigned char uc_readAddr)
     {
         if ((I2CTimeout--) == 0)
         {
-            us_IIC_result = 5;
             return 0;
         }
     }
@@ -173,7 +168,6 @@ unsigned char I2C_ByteRead(unsigned char uc_readAddr)
     {
         if ((I2CTimeout--) == 0)
         {
-            us_IIC_result = 6;
             return 0;
         }
     }
@@ -188,7 +182,6 @@ unsigned char I2C_ByteRead(unsigned char uc_readAddr)
     {
         if ((I2CTimeout--) == 0)
         {
-            us_IIC_result = 7;
             return 0;
         }
     }
@@ -205,7 +198,6 @@ unsigned char I2C_ByteRead(unsigned char uc_readAddr)
     {
         if ((I2CTimeout--) == 0)
         {
-            us_IIC_result = 8;
             return 0;
         }
     }
@@ -219,7 +211,6 @@ unsigned char I2C_ByteRead(unsigned char uc_readAddr)
     {
         if ((I2CTimeout--) == 0)
         {
-            us_IIC_result = 9;
             return 0;
         }
     }
@@ -233,7 +224,6 @@ unsigned char I2C_ByteRead(unsigned char uc_readAddr)
     {
         if ((I2CTimeout--) == 0)
         {
-            us_IIC_result = 10;
             return 0;
         }
     }
@@ -248,7 +238,6 @@ unsigned char I2C_ByteRead(unsigned char uc_readAddr)
     {
         if ((I2CTimeout--) == 0)
         {
-            us_IIC_result = 11;
             return 0;
         }
     }
