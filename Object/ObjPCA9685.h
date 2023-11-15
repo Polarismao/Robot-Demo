@@ -1,6 +1,5 @@
-#ifndef _PCA9685_H_
-#define _PCA9685_H_
-
+#ifndef _OBJPCA9685_H_
+#define _OBJPCA9685_H_
 #include "stm32f10x.h"
 
 
@@ -16,7 +15,7 @@
 #define LED0_OFF_L   0x08
 #define LED0_OFF_H   0x09
 
-void ObjPCA_Init(void);
+void ObjPCA_ParaInit(void);
 void ObjPCA_write(unsigned char uc_reg, unsigned char uc_data);
 void ObjPCA_setFreq(float freq);
 void ObjPCA_setPwm(unsigned char num, unsigned int on, unsigned int off);

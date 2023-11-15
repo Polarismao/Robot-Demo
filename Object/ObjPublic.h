@@ -46,15 +46,8 @@
 #define	 FRM100IDE61_FDOOR		   		1
 #define	 FRM100IDE62_FDOOR		   		2
 #define	 FRM100IDE63_FDOOR		   		3
-#define	 FRM100IDE64_FDOOR		   		4
-#define	 FRM100IDE65_FDOOR              5 
-#define	 FRM100IDE66_FDOOR              6
-#define	 FRM100IDE67_FDOOR              7
 
-#define  CF_INSERT_MAX1                 8
-
-void delay_ms(unsigned short nms);
-void delay_us(unsigned int nus);
+#define  CF_INSERT_MAX1                 4
 
 #define GetTime()		    ((SysTick->VAL) << 8)
 #define SYSTEM_CLOCK_100    (7200000000)
@@ -62,14 +55,14 @@ void delay_us(unsigned int nus);
 #define TIME_500US          (TIME_1US * 500)
 #define TIME_1MS            (TIME_1US * 1000)
 
-unsigned short deal_step;
-unsigned short bTimerHalfMs;
-unsigned short bTimer1ms;
-unsigned short bTimer2ms;
-unsigned short timerTicker;
-unsigned short timerTickerHalfMsOld;
-unsigned short timerTicker1msOld;
-unsigned short timerTicker2msOld;
+extern unsigned short deal_step;
+extern unsigned short bTimerHalfMs;
+extern unsigned short bTimer1ms;
+extern unsigned short bTimer2ms;
+extern unsigned short timerTicker;
+extern unsigned short timerTickerHalfMsOld;
+extern unsigned short timerTicker1msOld;
+extern unsigned short timerTicker2msOld;
 
 /*****************************************CANÄ£¿é*******************************************/
 typedef struct
@@ -104,6 +97,9 @@ extern unsigned char uc_phyCan_exId[4];
 extern unsigned char uc_phyCan_rxLen[4];
 extern unsigned char uc_phyCan_rxMessage[4][8];	
 extern unsigned char uc_phyCan_rxFlag[4];
+
+void delay_ms(unsigned long ul_nms);
+void delay_us(unsigned long ul_nus);
 
 #endif
 

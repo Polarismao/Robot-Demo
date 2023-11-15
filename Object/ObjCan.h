@@ -1,7 +1,7 @@
 #ifndef _OBJCAN_H_
 #define _OBJCAN_H_
 
-void Cf_Can_ParaInit(void);
+void ObjCan_ParaInit(void);
 void Cf_CanMainDeal(void);
 void Cf_CanStdRxDeal(void);
 void Cf_CanResetDeal(void);
@@ -11,7 +11,7 @@ void Cf_TxIdJudge(void);
 void Cf_TxIdCycle(void);
 void Cf_CanTxData(void);
 void Cf_EvtWaitTimeInc(void);
-void Cf_InsertReqList(unsigned short us_index,unsigned long ul_funId,unsigned short us_subId,unsigned char uc_exId,unsigned short us_tickTotal,unsigned short us_timeLimit,unsigned short us_doorType);
+void Cf_InsertReqList(unsigned short us_index,unsigned long ul_funId,unsigned short us_subId,unsigned char uc_exId,unsigned short us_tickTotal,unsigned short us_timeLimit);
 
 unsigned short us_cf_canSendTimer;
 unsigned short us_cf_cycleStep;

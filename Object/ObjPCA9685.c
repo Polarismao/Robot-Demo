@@ -1,4 +1,4 @@
-#include "PCA9685.h"
+#include "ObjPCA9685.h"
 #include "PhyIIc.h"
 #include "math.h"
 
@@ -8,9 +8,8 @@
 *@date   2023-09-23
 *@note 【备注】
 *************************************************************/
-void ObjPCA_Init(void)
+void ObjPCA_ParaInit(void)
 {
-	I2C_EE_Init();
 	ObjPCA_write(PCA9685_MODE1,0x00);
 	ObjPCA_setFreq(50);       //设置PWM频率
     ObjPCA_servoAngleSet(15, 90);    
@@ -34,19 +33,14 @@ void ObjPCA_setFreq(float freq)
 	prescaleval /= freq;
 	prescaleval -= 1;
 	uc_prescale = floor(prescaleval + 0.5f);
-
 	uc_oldmode = ObjPCA_read(PCA9685_MODE1);
+	uc_newmode = (uc_oldmode&0x7F) | 0x10;     //sleep
 
-	uc_newmode = (uc_oldmode&0x7F) | 0x10; // sleep
-
-	ObjPCA_write(PCA9685_MODE1, uc_newmode); // go to sleep
-
-	ObjPCA_write(PCA9685_PRE, uc_prescale); // set the prescaler
-
+	ObjPCA_write(PCA9685_MODE1, uc_newmode);   //go to sleep
+	ObjPCA_write(PCA9685_PRE, uc_prescale);    //set the prescaler
 	ObjPCA_write(PCA9685_MODE1, uc_oldmode);
 	//delay_ms(2);
-
-	ObjPCA_write(PCA9685_MODE1, uc_oldmode | 0xA1); 
+	ObjPCA_write(PCA9685_MODE1, uc_oldmode | 0xA1);
 }
 
 /*************************************************************

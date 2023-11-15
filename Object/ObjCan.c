@@ -7,7 +7,7 @@
 *@date   2023-11-09
 *@note 【备注】
 *************************************************************/
-void Cf_Can_ParaInit(void)
+void ObjCan_ParaInit(void)
 {
 
 
@@ -43,26 +43,15 @@ void Cf_CanMainDeal(void)
 	if(us_cf_canSendTimer>=us_sendCycle)
 	{
 		us_cf_canSendTimer=0;
-		Cf_CanEvtChk();
 		Cf_CanTxDeal();
-		if(us_cf_needSend)
+		if(us_cf_needSend) 
 		{
 			us_cf_needSend = 0;
-			physical_can_deal(st_cf_sendFrame.COB_ID,st_cf_sendFrame.uc_exId,st_cf_sendFrame.DLC,st_cf_sendFrame.Data);
+			physical_can_send(st_cf_sendFrame.COB_ID,st_cf_sendFrame.uc_exId,st_cf_sendFrame.DLC,st_cf_sendFrame.Data);
 		}
 	}
+	Cf_CanStdRxDeal();
 	Cf_CanResetDeal();
-}
-
-/*************************************************************
-*@brief【描述】
-*@author mdq
-*@date   2023-11-09
-*@note 【备注】
-*************************************************************/
-void Cf_CanResetDeal(void)
-{
-	//Cf_CopOnlineJudge();
 }
 
 /*************************************************************
@@ -77,7 +66,7 @@ void Cf_CanStdRxDeal(void)
 }
 
 /*************************************************************
-*@brief【描述】
+*@brief【事件帧判断】
 *@author mdq
 *@date   2023-11-09
 *@note 【备注】
@@ -88,29 +77,30 @@ void Cf_CanEvtChk(void)
 }
 
 /*************************************************************
-*@brief【描述】
+*@brief【CAN发送处理】
 *@author mdq
 *@date   2023-11-12
 *@note 【备注】
 *************************************************************/
 void Cf_CanTxDeal(void)
 {
+	Cf_CanEvtChk();            //事件帧判断
 	us_cf_stepToggle ^= 0x01;
 	if(us_cf_stepToggle&0x01)
 		Cf_TxIdCycle();
 	
-	Cf_EvtWaitTimeInc();
-	Cf_TxIdJudge();
-	Cf_CanTxData();
+	Cf_EvtWaitTimeInc();      //事件帧紧急情况判断
+	Cf_TxIdJudge();			  //发送CANID选择
+	Cf_CanTxData();			  //发送帧内容填充
 }
 
 /*************************************************************
-*@brief【描述】
+*@brief【CAN周期帧处理】
 *@author mdq
 *@date   2023-11-10
-*@note 【备注】
+*@note 【20ms进每个case的执行为100ms周期】
 *************************************************************/
-void Cf_TxIdCycle(void)	 //20ms进每个case的执行为200ms周期
+void Cf_TxIdCycle(void)
 {
 	if(st_cf_cycleTxId.ul_funId)
 		return;
@@ -137,31 +127,11 @@ void Cf_TxIdCycle(void)	 //20ms进每个case的执行为200ms周期
 		{	
 			break;
 		}
-		case 5:
-		{
-			break;
-		}
-		case 6:
-		{		
-			break;
-		}
-		case 7:
-		{
-			break;
-		}
-		case 8:
-		{
-			break;
-		}
-		case 9:
-		{	
-			break;		
-		}
 		default:
 			break;
 	}
 	us_cf_cycleStep++;
-	if(us_cf_cycleStep>9)
+	if(us_cf_cycleStep>4)
 		us_cf_cycleStep=0;
 }
 
@@ -205,7 +175,7 @@ void Cf_EvtWaitTimeInc(void)
 }
 
 /*************************************************************
-*@brief【描述】
+*@brief【发送CANID选择（事件帧/周期帧）】
 *@author mdq
 *@date   2023-11-12
 *@note 【备注】
@@ -215,7 +185,7 @@ void Cf_TxIdJudge(void)
 	st_cf_sendFrame.COB_ID = 0;
 	st_cf_sendFrame.ul_funId = 0;
 	st_cf_sendFrame.us_subId = 0;
-  	st_cf_sendFrame.uc_exId = 0;    //V20.12 初始化默认标准帧
+  	st_cf_sendFrame.uc_exId = 0;
 
 	us_cf_judgeToggle ^= 0x01;
 	if(us_cf_judgeToggle&0x01)
@@ -281,62 +251,37 @@ void Cf_CanTxData(void)
 		{
 			case 0x60:
 			{
-				st_cf_sendFrame.COB_ID=0;
+				st_cf_sendFrame.COB_ID = 0;
 				st_cf_sendFrame.DLC = 8;
 				break;			
 			}
 			default:
 			{
-				st_cf_sendFrame.COB_ID=0;
+				st_cf_sendFrame.COB_ID = 0;
 				break;
 			}
 		}
 	}      
-	else if(st_cf_sendFrame.COB_ID==0x417)
-	{
-		if(st_cf_sendFrame.us_subId==0xE4)
-		{
-			//Cf_PackFrm417IdeE4(st_cf_sendFrame.Data);
-			st_cf_sendFrame.DLC = 8;
-		}
-	}
+
 	if(st_cf_sendFrame.COB_ID)
 	{
 		us_cf_needSend = 1;
 	}
 }
 
-/* void Cf_PackFrm100Ide60Fdoor(unsigned char * puc_data)
-{
-	static unsigned char uc_dataBak = 0;
-	
-	puc_data[0] = ((LIFT_NUM_CAN&0xff)<<4)+0x05;
-	puc_data[1] = 0;
-	puc_data[2] = 0x60; 
-	puc_data[3] = 0xFF;
-	puc_data[4] = cfDoor[0].cop_out_lamp[0];
-	puc_data[5] = 0x01;
-	puc_data[6] = 0;
-	puc_data[7] = 0;
-	
-	Cf_TxMaskDeal(&uc_dataBak,&puc_data[3],&puc_data[4]);
-} */
-
-
 /*************************************************************
-*@brief【描述】
-*@param  us_index    【参数注释】
-*@param  ul_funId    【参数注释】
-*@param  us_subId    【参数注释】
-*@param  uc_exId     【参数注释】
+*@brief【事件帧队列插入处理】
+*@param  us_index    【事件帧序号】
+*@param  ul_funId    【CANID】
+*@param  us_subId    【CAN子ID】
+*@param  uc_exId     【是否为扩展帧】
 *@param  us_tickTotal【参数注释】
 *@param  us_timeLimit【参数注释】
-*@param  us_doorType 【参数注释】
 *@author mdq
 *@date   2023-11-12
 *@note 【备注】
 *************************************************************/
-void Cf_InsertReqList(unsigned short us_index,unsigned long ul_funId,unsigned short us_subId,unsigned char uc_exId,unsigned short us_tickTotal,unsigned short us_timeLimit,unsigned short us_doorType)
+void Cf_InsertReqList(unsigned short us_index,unsigned long ul_funId,unsigned short us_subId,unsigned char uc_exId,unsigned short us_tickTotal,unsigned short us_timeLimit)
 {
 	if((st_cf_insertReq[us_index].ul_funId == ul_funId) && (st_cf_insertReq[us_index].us_subId == us_subId))
 	{
@@ -354,3 +299,28 @@ void Cf_InsertReqList(unsigned short us_index,unsigned long ul_funId,unsigned sh
 	}
 }
 
+/*************************************************************
+*@brief【描述】
+*@author mdq
+*@date   2023-11-09
+*@note 【备注】
+*************************************************************/
+void Cf_CanResetDeal(void)
+{
+	//Cf_CopOnlineJudge();
+}
+
+/* void Cf_PackFrm100Ide60Fdoor(unsigned char * puc_data)
+{
+	static unsigned char uc_dataBak = 0;
+	
+	puc_data[0] = ((LIFT_NUM_CAN&0xff)<<4)+0x05;
+	puc_data[1] = 0;
+	puc_data[2] = 0x60; 
+	puc_data[3] = 0xFF;
+	puc_data[4] = cfDoor[0].cop_out_lamp[0];
+	puc_data[5] = 0x01;
+	puc_data[6] = 0;
+	puc_data[7] = 0;
+
+} */

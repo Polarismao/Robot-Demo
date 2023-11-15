@@ -78,7 +78,7 @@ void CAN_Configuartion(unsigned char can_baut, unsigned short Acr, unsigned shor
 *@date   2023-11-09
 *@note ¡¾±¸×¢¡¿
 *************************************************************/
-void physical_can_deal(unsigned long can_Id,unsigned char uc_exId, unsigned char can_data_lenth,unsigned char *can_data)
+void physical_can_send(unsigned long can_Id,unsigned char uc_exId, unsigned char can_data_lenth,unsigned char *can_data)
 {
 	unsigned char i;
 	unsigned char *ptr;

@@ -37,8 +37,9 @@ int main(void)
 *************************************************************/
 void LgMain_Init(void)
 {
-    ObjPCA_Init();
-	Iwdg_init();
+    ObjPCA_ParaInit();
+	ObjCan_ParaInit();
+
 }
 
 /*************************************************************
@@ -55,7 +56,7 @@ void LgMain_2msDeal(void)
 	{
 		case 0:
 		{
-			//object_232_deal();
+			Cf_CanMainDeal();
 			deal_step++;
 			break;
 		}
