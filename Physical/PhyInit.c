@@ -13,8 +13,11 @@ void RCC_Configuration(void);
 
 void System_init(void);
 void Iwdg_init(void);
+void Delay_init(void);
 void PhyWDG_Reload(void);
 
+unsigned long ul_fac_us;
+unsigned long ul_fac_ms;
 
 /*************************************************************
 *@brief【系统初始化函数】
@@ -26,7 +29,7 @@ void System_init(void)
 {
  	PhySys_InterruptInit();	
 	RCC_Configuration();			//配置系统时钟
-	//USART_Config();			    //uart初始化
+	USART_Config(1,2,4,0);			//uart初始化
 	CAN_Configuartion(1,0,0);		//CAN初始化
     I2C_EE_Init();                  //IIC初始化
 	Iwdg_init();
@@ -152,8 +155,21 @@ void PhyWDG_Reload(void)
 }
 
 /*************************************************************
+*@brief【延迟模块初始化】
+*@author mdq
+*@date   2023-11-19
+*@note 【备注】
+*************************************************************/
+void Delay_init(void)
+{
+	SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK_Div8);
+	ul_fac_us = SystemCoreClock / 8000000;
+	ul_fac_ms = fac_us * 1000;
+}
+
+/*************************************************************
 *@brief【ms级延迟函数】
-*@param  us_nms      【ms数】
+*@param  ul_nms      【ms数】
 *@author mdq
 *@date   2023-11-15
 *@note 【备注】
@@ -161,12 +177,12 @@ void PhyWDG_Reload(void)
 void delay_ms(unsigned long ul_nms)
 {
 	unsigned long temp;
-	SysTick->LOAD = 9000*nms;
+	SysTick->LOAD = ul_fac_ms*ul_nms;
 	SysTick->VAL=0X00;//清空计数器
 	SysTick->CTRL=0X01;//使能，减到零是无动作，采用外部时钟源
 	do
 	{
-	temp=SysTick->CTRL;//读取当前倒计数值
+		temp=SysTick->CTRL;//读取当前倒计数值
 	}while((temp&0x01)&&(!(temp&(1<<16))));//等待时间到达
 	SysTick->CTRL=0x00; //关闭计数器
 	SysTick->VAL =0X00; //清空计数器
@@ -174,7 +190,7 @@ void delay_ms(unsigned long ul_nms)
 
 /*************************************************************
 *@brief【us级延迟函数】
-*@param  us_nus      【us数】
+*@param  ul_nus      【us数】
 *@author mdq
 *@date   2023-11-15
 *@note 【备注】
@@ -182,7 +198,7 @@ void delay_ms(unsigned long ul_nms)
 void delay_us(unsigned long ul_nus)
 {
 	unsigned short us_temp;
-	SysTick->LOAD = 9*us_nus;
+	SysTick->LOAD = ul_fac_us*ul_nus;
 	SysTick->VAL = 0X00;      //清空计数器
 	SysTick->CTRL = 0X01;     //使能，减到零是无动作，采用外部时钟源
 	do

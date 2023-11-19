@@ -2,7 +2,6 @@
 #include "ObjPublic.h"
 #include "main.h"
 
-extern void PhyWDG_Reload(void);
 unsigned long baseTime=0;
 unsigned short us_mainDelayTimer=0;
 unsigned short us_pwmSet = 0;
@@ -39,6 +38,7 @@ void LgMain_Init(void)
 {
     ObjPCA_ParaInit();
 	ObjCan_ParaInit();
+	Delay_init();
 
 }
 
