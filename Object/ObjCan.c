@@ -291,7 +291,7 @@ void Cf_InsertReqList(unsigned short us_index,unsigned long ul_funId,unsigned sh
 	{
 		st_cf_insertReq[us_index].ul_funId = ul_funId;
 		st_cf_insertReq[us_index].us_subId = us_subId;
-    		st_cf_insertReq[us_index].uc_exId = uc_exId;
+    	st_cf_insertReq[us_index].uc_exId = uc_exId;
 		st_cf_insertReq[us_index].us_tickLeft = us_tickTotal;
 		st_cf_insertReq[us_index].us_timeCur = 0;
 		st_cf_insertReq[us_index].us_timeLimit = us_timeLimit;
@@ -312,9 +312,7 @@ void Cf_CanResetDeal(void)
 
 /* void Cf_PackFrm100Ide60Fdoor(unsigned char * puc_data)
 {
-	static unsigned char uc_dataBak = 0;
-	
-	puc_data[0] = ((LIFT_NUM_CAN&0xff)<<4)+0x05;
+	puc_data[0] = ;
 	puc_data[1] = 0;
 	puc_data[2] = 0x60; 
 	puc_data[3] = 0xFF;
@@ -322,5 +320,4 @@ void Cf_CanResetDeal(void)
 	puc_data[5] = 0x01;
 	puc_data[6] = 0;
 	puc_data[7] = 0;
-
 } */

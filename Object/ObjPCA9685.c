@@ -12,7 +12,7 @@ void ObjPCA_ParaInit(void)
 {
 	ObjPCA_write(PCA9685_MODE1,0x00);
 	ObjPCA_setFreq(50);       //设置PWM频率
-    ObjPCA_servoAngleSet(15, 90);    
+    ObjPCA_servoAngleSet(15, 90);
 	//delay_ms(500);
 }
 
@@ -33,6 +33,7 @@ void ObjPCA_setFreq(float freq)
 	prescaleval /= freq;
 	prescaleval -= 1;
 	uc_prescale = floor(prescaleval + 0.5f);
+	
 	uc_oldmode = ObjPCA_read(PCA9685_MODE1);
 	uc_newmode = (uc_oldmode&0x7F) | 0x10;     //sleep
 
