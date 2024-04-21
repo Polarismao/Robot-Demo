@@ -31,7 +31,7 @@ void System_init(void)
 	RCC_Configuration();			//配置系统时钟
 	USART_Config(1,2,4,0);			//uart初始化
 	CAN_Configuartion(1,0,0);		//CAN初始化
-    I2C_EE_Init();                  //IIC初始化
+    I2C_Init();                  //IIC初始化
 	Iwdg_init();
 }
 

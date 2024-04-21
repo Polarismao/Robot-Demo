@@ -7,7 +7,7 @@
 #define I2CT_FLAG_TIMEOUT         ((unsigned int)0x1000)
 #define I2CT_LONG_TIMEOUT         ((unsigned int)(10 * I2CT_FLAG_TIMEOUT))
 
-void I2C_EE_Init(void);
+void I2C_Init(void);
 void I2C_GPIO_Config(void);
 void I2C_Mode_Config(void);
 void I2C_ByteWrite(unsigned char uc_data, unsigned char uc_writeAddr);

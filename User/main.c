@@ -8,8 +8,8 @@ unsigned short us_pwmSet = 0;
 
 int main(void)
 {
-    System_init();  //MCU系统初始化
-    LgMain_Init();  //对象层模块初始化
+    System_init();      //MCU系统初始化
+    ObjModul_Init();    //对象层模块初始化
     baseTime = GetTime();
     while(1)
     {
@@ -34,10 +34,11 @@ int main(void)
 *@date   2023-11-10
 *@note 【备注】
 *************************************************************/
-void LgMain_Init(void)
+void ObjModul_Init(void)
 {
     ObjPCA_ParaInit();
 	ObjCan_ParaInit();
+	Obj232_ParaInit();
 	Delay_init();
 
 }

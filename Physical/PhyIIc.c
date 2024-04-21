@@ -9,7 +9,7 @@
 *@date   2023-09-10
 *@note 【备注】
 *************************************************************/
-void I2C_EE_Init(void)
+void I2C_Init(void)
 {
     I2C_GPIO_Config();
     I2C_Mode_Config();
@@ -24,10 +24,6 @@ void I2C_EE_Init(void)
 void I2C_GPIO_Config(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
-    /* 使能 I2C 外设时钟 */
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1, ENABLE);
-    /* 使能 I2C 引脚的 GPIO 时钟 */
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
 
     /* 配置 SCL、SDA 引脚 */
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;

@@ -29,8 +29,8 @@ void USART_Config(unsigned char uart_nub,unsigned char uart_mode,unsigned char u
 	if(uart_Baut==0)        USART_InitStructure.USART_BaudRate = 9600;
 	else if(uart_Baut==1)	USART_InitStructure.USART_BaudRate = 19200;
 	else if(uart_Baut==2)	USART_InitStructure.USART_BaudRate = 38400;
-	else if(uart_Baut==3)	USART_InitStructure.USART_BaudRate = 57600;	
-	else if(uart_Baut==4)	USART_InitStructure.USART_BaudRate = 115200;	
+	else if(uart_Baut==3)	USART_InitStructure.USART_BaudRate = 57600;
+	else if(uart_Baut==4)	USART_InitStructure.USART_BaudRate = 115200;
 		
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;		
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;
