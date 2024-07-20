@@ -41,7 +41,7 @@
 #define CF_24H    (86400000) //24H
 
 
-/**************************ÊÂ¼þÖ¡*****************************/
+/**************************ï¿½Â¼ï¿½Ö¡*****************************/
 #define	 FRM100IDE60_FDOOR		   		0
 #define	 FRM100IDE61_FDOOR		   		1
 #define	 FRM100IDE62_FDOOR		   		2
@@ -55,7 +55,7 @@
 #define TIME_500US          (TIME_1US * 500)
 #define TIME_1MS            (TIME_1US * 1000)
 
-extern unsigned short deal_step;
+extern unsigned short us_step;
 extern unsigned short bTimerHalfMs;
 extern unsigned short bTimer1ms;
 extern unsigned short bTimer2ms;
@@ -64,7 +64,7 @@ extern unsigned short timerTickerHalfMsOld;
 extern unsigned short timerTicker1msOld;
 extern unsigned short timerTicker2msOld;
 
-/*****************************************CANÄ£¿é*******************************************/
+/*****************************************CANÄ£ï¿½ï¿½*******************************************/
 typedef struct
 {
 	unsigned long COB_ID;

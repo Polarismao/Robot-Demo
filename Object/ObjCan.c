@@ -19,7 +19,7 @@ void ObjCan_ParaInit(void)
 *@date   2023-11-09
 *@note 【备注】
 *************************************************************/
-void Cf_CanMainDeal(void)
+void ObjCan_MainDeal(void)
 {
 	unsigned short i,m,us_sendCycle;
     
@@ -44,7 +44,7 @@ void Cf_CanMainDeal(void)
 	{
 		us_cf_canSendTimer=0;
 		Cf_CanTxDeal();
-		if(us_cf_needSend) 
+		if(us_cf_needSend)
 		{
 			us_cf_needSend = 0;
 			physical_can_send(st_cf_sendFrame.COB_ID,st_cf_sendFrame.uc_exId,st_cf_sendFrame.DLC,st_cf_sendFrame.Data);

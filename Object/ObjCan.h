@@ -2,7 +2,7 @@
 #define _OBJCAN_H_
 
 void ObjCan_ParaInit(void);
-void Cf_CanMainDeal(void);
+void ObjCan_MainDeal(void);
 void Cf_CanStdRxDeal(void);
 void Cf_CanResetDeal(void);
 void Cf_CanTxDeal(void);

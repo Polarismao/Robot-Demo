@@ -51,39 +51,41 @@ void ObjModul_Init(void)
 *************************************************************/
 void LgMain_2msDeal(void)
 {
-    ObjPCA_servoAngleSet(15, us_pwmSet);
+    unsigned short us_step;
+	ObjPCA_servoAngleSet(15, us_pwmSet);
 	
-	switch(deal_step)
+	switch(us_step)
 	{
 		case 0:
 		{
-			Cf_CanMainDeal();
-			deal_step++;
+			ObjCan_MainDeal();
+			Obj232_MainDeal();
+			us_step++;
 			break;
 		}
 		case 1:
 		{
-			deal_step++;
+			us_step++;
 			break;
 		}
 		case 2:
 		{
-            deal_step++;
+            us_step++;
 			break;
 		}								
 		case 3:
 		{
-			deal_step++;
+			us_step++;
 			break;
 		}							
 		case 4:
 		{
-			deal_step=0;
+			us_step=0;
 			break;
 		}
 		default:
 		{
-			deal_step=0;
+			us_step=0;
 			break;
 		}			
 	}	
