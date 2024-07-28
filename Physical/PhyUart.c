@@ -2,16 +2,13 @@
 #include "PhyUart.h"
 
 
-/*************************************************************
-*@brief【串口配置函数】
-*@param  uart_nub    【串口号】
-*@param  uart_mode   【串口模式】
-*@param  uart_Baut   【参数注释】
-*@param  slave_mode  【参数注释】
-*@author mdq
-*@date   2023-11-19
-*@note 【备注】
-*************************************************************/
+/**
+ * @brief 串口物理层配置
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-07-28
+ * @copyright Copyright (c) 2024
+ */
 void USART_Config(unsigned char uart_nub,unsigned char uart_mode,unsigned char uart_Baut,unsigned char slave_mode)
 {
 	GPIO_InitTypeDef	GPIO_InitStructure;

@@ -1,3 +1,5 @@
+#include "ObjPublic.h"
+#include "Obj232.h"
 
 static BOOL b_obj232_moduleActive = true;
 
@@ -15,15 +17,15 @@ void Obj232_ParaInit(void)
 }
 
 /**
- * @brief 
+ * @brief 232模块激活处理
  * @version 1.0
  * @author MAO (mao_deqiang@126.com)
  * @date 2024-07-20
  * @copyright Copyright (c) 2024
  */
-void Obj232_ModuleStatus(BOOL b_ActStatus)
+void Obj232_ModuleStatus(BOOL b_actStatus)
 {
-    b_obj232_moduleActive = b_ActStatus;
+    b_obj232_moduleActive = b_actStatus;
 }
 
 /**
@@ -41,13 +43,13 @@ void Obj232_MainDeal(void)
 }
 
 /**
- * @brief 
+ * @brief 232模块CRC校验
  * @version 1.0
  * @author MAO (mao_deqiang@126.com)
  * @date 2024-07-20
  * @copyright Copyright (c) 2024
  */
-unsigned short Obj232_CrcCal(unsigned char *data_value,unsigned char length)
+unsigned short Obj232_CrcCal(unsigned char *data_value,unsigned char uc_length)
 {
 	unsigned short crc_value=0xFFFF;
 	unsigned short i=0,ia=0;

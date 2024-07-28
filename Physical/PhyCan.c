@@ -2,15 +2,13 @@
 #include "PhyCan.h"
 #include "PhyPublic.h"
 
-/*************************************************************
-*@brief¡¾CANÄ£¿éÅäÖÃ¡¿
-*@param  can_baut    ¡¾²¨ÌØÂÊ¡¿
-*@param  Acr         ¡¾²ÎÊı×¢ÊÍ¡¿
-*@param  Amr         ¡¾²ÎÊı×¢ÊÍ¡¿
-*@author mdq
-*@date   2023-11-09
-*@note ¡¾±¸×¢¡¿
-*************************************************************/
+/**
+ * @brief CANæ¨¡å—ç‰©ç†å±‚é…ç½®
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-07-28
+ * @copyright Copyright (c) 2024
+ */
 void CAN_Configuartion(unsigned char can_baut, unsigned short Acr, unsigned short Amr)
 {									 
 	NVIC_InitStructure.NVIC_IRQChannel = USB_LP_CAN1_RX0_IRQn; //CAN
@@ -28,24 +26,24 @@ void CAN_Configuartion(unsigned char can_baut, unsigned short Acr, unsigned shor
 	CAN_InitStructure.CAN_NART=DISABLE;
 	CAN_InitStructure.CAN_RFLM=DISABLE;
 	CAN_InitStructure.CAN_TXFP=DISABLE;
-	CAN_InitStructure.CAN_Mode=CAN_Mode_Normal;// Õı³£Ä£Ê½
+	CAN_InitStructure.CAN_Mode=CAN_Mode_Normal;// ï¿½ï¿½ï¿½ï¿½Ä£Ê½
 	if(can_baut==0)
 	{
-		CAN_InitStructure.CAN_SJW=CAN_SJW_3tq;  //¼ÆËã²¨ÌØÂÊ
+		CAN_InitStructure.CAN_SJW=CAN_SJW_3tq;  //ï¿½ï¿½ï¿½ã²¨ï¿½ï¿½ï¿½ï¿½
 		CAN_InitStructure.CAN_BS1=CAN_BS1_13tq;
 		CAN_InitStructure.CAN_BS2=CAN_BS2_6tq;
 		CAN_InitStructure.CAN_Prescaler=36;  //50k
 	}
 	else if(can_baut==1)//100k
 	{
-		CAN_InitStructure.CAN_SJW=CAN_SJW_3tq;  //¼ÆËã²¨ÌØÂÊ
+		CAN_InitStructure.CAN_SJW=CAN_SJW_3tq;  //ï¿½ï¿½ï¿½ã²¨ï¿½ï¿½ï¿½ï¿½
 		CAN_InitStructure.CAN_BS1=CAN_BS1_13tq;
 		CAN_InitStructure.CAN_BS2=CAN_BS2_6tq;
 		CAN_InitStructure.CAN_Prescaler=18;  //100k			
 	}
 	else if(can_baut==2)//250k
 	{
-		CAN_InitStructure.CAN_SJW=CAN_SJW_1tq;  //¼ÆËã²¨ÌØÂÊ
+		CAN_InitStructure.CAN_SJW=CAN_SJW_1tq;  //ï¿½ï¿½ï¿½ã²¨ï¿½ï¿½ï¿½ï¿½
 		CAN_InitStructure.CAN_BS1=CAN_BS1_3tq;
 		CAN_InitStructure.CAN_BS2=CAN_BS2_2tq;
 		CAN_InitStructure.CAN_Prescaler = 24;	
@@ -61,60 +59,58 @@ void CAN_Configuartion(unsigned char can_baut, unsigned short Acr, unsigned shor
 	CAN_FilterInitStructure.CAN_FilterIdLow=0x0000;
 	CAN_FilterInitStructure.CAN_FilterMaskIdHigh=(~Amr)<<5;
 	CAN_FilterInitStructure.CAN_FilterMaskIdLow=0x0000;
-	CAN_FilterInitStructure.CAN_FilterFIFOAssignment=CAN_FIFO0; 			//Ñ¡Ôñ½ÓÊÕFIFO
+	CAN_FilterInitStructure.CAN_FilterFIFOAssignment=CAN_FIFO0; 			//Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½FIFO
 	CAN_FilterInitStructure.CAN_FilterActivation=ENABLE;
 	CAN_FilterInit(&CAN_FilterInitStructure);
 	
 	CAN_ITConfig(CAN1,CAN_IT_FMP0, ENABLE);
 }
 
-/*************************************************************
-*@brief¡¾CANÎïÀí²ã·¢ËÍº¯Êı¡¿
-*@param  can_Id      ¡¾²ÎÊı×¢ÊÍ¡¿
-*@param  uc_exId     ¡¾²ÎÊı×¢ÊÍ¡¿
-*@param  can_data_lenth¡¾²ÎÊı×¢ÊÍ¡¿
-*@param  can_data    ¡¾²ÎÊı×¢ÊÍ¡¿
-*@author mdq
-*@date   2023-11-09
-*@note ¡¾±¸×¢¡¿
-*************************************************************/
+/**
+ * @brief CANç‰©ç†å±‚å‘é€å¤„ç†
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-07-28
+ * @copyright Copyright (c) 2024
+ */
 void physical_can_send(unsigned long can_Id,unsigned char uc_exId, unsigned char can_data_lenth,unsigned char *can_data)
 {
 	unsigned char i;
 	unsigned char *ptr;
     
-	TxMessage.StdId = can_Id&0x7ff;         //11Î»±ê×¼Ö¡
-	TxMessage.ExtId = can_Id&0x1fffffff;    //29Î»À©Õ¹Ö¡
+	TxMessage.StdId = can_Id&0x7ff;         //11Î»ï¿½ï¿½×¼Ö¡
+	TxMessage.ExtId = can_Id&0x1fffffff;    //29Î»ï¿½ï¿½Õ¹Ö¡
 
     if(0 == uc_exId)
         TxMessage.IDE = CAN_ID_STD;
     else
         TxMessage.IDE = CAN_ID_EXT;
 
-	TxMessage.RTR = CAN_RTR_DATA;   //Êı¾İÖ¡
-	TxMessage.DLC = can_data_lenth; //·¢ËÍ³¤¶È
+	TxMessage.RTR = CAN_RTR_DATA;   //ï¿½ï¿½ï¿½ï¿½Ö¡
+	TxMessage.DLC = can_data_lenth; //ï¿½ï¿½ï¿½Í³ï¿½ï¿½ï¿½
 
 	ptr = can_data; 
 	for(i=0;i<can_data_lenth;i++)
 	{	
-		TxMessage.Data[i]=*ptr++;  //´«µİÊı¾İ
+		TxMessage.Data[i]=*ptr++;  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	}
 	ptr =can_data; 
-	for(i=0;i<can_data_lenth;i++)     //Çå³ı·¢ËÍÊı¾İ
+	for(i=0;i<can_data_lenth;i++)     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	{
 		*ptr++=0;
 	}	
 	CAN_ITConfig(CAN1,CAN_IT_FMP0, ENABLE); 
-	CAN_Transmit(CAN1,&TxMessage);   //·¢ËÍÊı¾İ
+	CAN_Transmit(CAN1,&TxMessage);   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 	
 }
 
-/*************************************************************
-*@brief¡¾CAN½ÓÊÕÖĞ¶Ï¡¿
-*@author mdq
-*@date   2023-11-09
-*@note ¡¾±¸×¢¡¿
-*************************************************************/
+/**
+ * @brief CANç‰©ç†å±‚æ¥æ”¶å¤„ç†
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-07-28
+ * @copyright Copyright (c) 2024
+ */
 void USB_LP_CAN1_RX0_IRQHandler(void)
 {
 	unsigned char i,m;	
@@ -125,7 +121,7 @@ void USB_LP_CAN1_RX0_IRQHandler(void)
 	RxMessage.FMI=0;
 	for(i=0;i<8;i++)
 	{
-		RxMessage.Data[i]=0x00; //Çå³ıÆäÄÚÈİ
+		RxMessage.Data[i]=0x00; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	}
 	CAN_Receive(CAN1,CAN_FIFO0, &RxMessage);
 	for(m=0;m<4;m++)	
@@ -140,7 +136,7 @@ void USB_LP_CAN1_RX0_IRQHandler(void)
             else
             {
 		        uc_phyCan_exId[m] = 1;
-    			ul_phyCan_rxId[m] = RxMessage.ExtId;                
+    			ul_phyCan_rxId[m] = RxMessage.ExtId;
             }
             
 			uc_phyCan_rxLen[m] = RxMessage.DLC;
@@ -153,4 +149,7 @@ void USB_LP_CAN1_RX0_IRQHandler(void)
 		}	
 	}
 }
+
+
+
 

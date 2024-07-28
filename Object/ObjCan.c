@@ -1,24 +1,26 @@
 #include "ObjPublic.h"
 #include "ObjCan.h"
 
-/*************************************************************
-*@brief【描述】
-*@author mdq
-*@date   2023-11-09
-*@note 【备注】
-*************************************************************/
+/**
+ * @brief CAN模块初始化
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-07-28
+ * @copyright Copyright (c) 2024
+ */
 void ObjCan_ParaInit(void)
 {
 
 
 }
 
-/*************************************************************
-*@brief【描述】
-*@author mdq
-*@date   2023-11-09
-*@note 【备注】
-*************************************************************/
+/**
+ * @brief CAN模块处理主函数
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-07-28
+ * @copyright Copyright (c) 2024
+ */
 void ObjCan_MainDeal(void)
 {
 	unsigned short i,m,us_sendCycle;
@@ -50,38 +52,70 @@ void ObjCan_MainDeal(void)
 			physical_can_send(st_cf_sendFrame.COB_ID,st_cf_sendFrame.uc_exId,st_cf_sendFrame.DLC,st_cf_sendFrame.Data);
 		}
 	}
-	Cf_CanStdRxDeal();
+
+	if(0 == st_cf_rcecFrame.uc_exId)
+		Cf_CanStdRxDeal();
+	else
+		Cf_CanExtRxDeal();
+
 	Cf_CanResetDeal();
 }
 
-/*************************************************************
-*@brief【描述】
-*@author mdq
-*@date   2023-11-09
-*@note 【备注】
-*************************************************************/
+/**
+ * @brief 标准帧接收处理函数
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-07-28
+ * @copyright Copyright (c) 2024
+ */
 void Cf_CanStdRxDeal(void)
 {
-	//Cf_FdMainCopRxDeal();		
+	if(st_cf_rcecFrame.COB_ID==0x180)
+	{
+
+	}
 }
 
-/*************************************************************
-*@brief【事件帧判断】
-*@author mdq
-*@date   2023-11-09
-*@note 【备注】
-*************************************************************/
+
+/**
+ * @brief 扩展帧接收处理函数
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-07-28
+ * @copyright Copyright (c) 2024
+ */
+void Cf_CanExtRxDeal(void)
+{
+	if(st_cf_rcecFrame.COB_ID == 0x37FF)
+	{
+
+	}
+}
+
+
+/**
+ * @brief 事件帧判断
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-07-28
+ * @copyright Copyright (c) 2024
+ */
 void Cf_CanEvtChk(void)
 {
-   //FunMpc1_EvtChkMpc1Gen1Eid();
+
+
+
+
 }
 
-/*************************************************************
-*@brief【CAN发送处理】
-*@author mdq
-*@date   2023-11-12
-*@note 【备注】
-*************************************************************/
+
+/**
+ * @brief CAN发送处理
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-07-28
+ * @copyright Copyright (c) 2024
+ */
 void Cf_CanTxDeal(void)
 {
 	Cf_CanEvtChk();            //事件帧判断
@@ -94,12 +128,14 @@ void Cf_CanTxDeal(void)
 	Cf_CanTxData();			  //发送帧内容填充
 }
 
-/*************************************************************
-*@brief【CAN周期帧处理】
-*@author mdq
-*@date   2023-11-10
-*@note 【20ms进每个case的执行为100ms周期】
-*************************************************************/
+
+/**
+ * @brief CAN周期帧处理
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-07-28
+ * @copyright Copyright (c) 2024
+ */
 void Cf_TxIdCycle(void)
 {
 	if(st_cf_cycleTxId.ul_funId)
@@ -135,12 +171,13 @@ void Cf_TxIdCycle(void)
 		us_cf_cycleStep=0;
 }
 
-/*************************************************************
-*@brief【判断所有事件的紧急程度】
-*@author mdq
-*@date   2023-11-12
-*@note 【备注】
-*************************************************************/
+/**
+ * @brief 判断所有事件的紧急程度
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-07-28
+ * @copyright Copyright (c) 2024
+ */
 void Cf_EvtWaitTimeInc(void)
 {
 	unsigned short i;
@@ -174,12 +211,13 @@ void Cf_EvtWaitTimeInc(void)
 	}
 }
 
-/*************************************************************
-*@brief【发送CANID选择（事件帧/周期帧）】
-*@author mdq
-*@date   2023-11-12
-*@note 【备注】
-*************************************************************/
+/**
+ * @brief 发送CANID选择（事件帧/周期帧）
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-07-28
+ * @copyright Copyright (c) 2024
+ */
 void Cf_TxIdJudge(void)
 {
 	st_cf_sendFrame.COB_ID = 0;
@@ -231,12 +269,13 @@ void Cf_TxIdJudge(void)
 	}
 }
 
-/*************************************************************
-*@brief【发送CAN帧内容】
-*@author mdq
-*@date   2023-11-09
-*@note 【备注】
-*************************************************************/
+/**
+ * @brief 发送CAN帧内容
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-07-28
+ * @copyright Copyright (c) 2024
+ */
 void Cf_CanTxData(void)
 {
 	unsigned short i;
@@ -269,18 +308,13 @@ void Cf_CanTxData(void)
 	}
 }
 
-/*************************************************************
-*@brief【事件帧队列插入处理】
-*@param  us_index    【事件帧序号】
-*@param  ul_funId    【CANID】
-*@param  us_subId    【CAN子ID】
-*@param  uc_exId     【是否为扩展帧】
-*@param  us_tickTotal【参数注释】
-*@param  us_timeLimit【参数注释】
-*@author mdq
-*@date   2023-11-12
-*@note 【备注】
-*************************************************************/
+/**
+ * @brief 事件帧队列插入处理
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-07-28
+ * @copyright Copyright (c) 2024
+ */
 void Cf_InsertReqList(unsigned short us_index,unsigned long ul_funId,unsigned short us_subId,unsigned char uc_exId,unsigned short us_tickTotal,unsigned short us_timeLimit)
 {
 	if((st_cf_insertReq[us_index].ul_funId == ul_funId) && (st_cf_insertReq[us_index].us_subId == us_subId))
@@ -299,25 +333,21 @@ void Cf_InsertReqList(unsigned short us_index,unsigned long ul_funId,unsigned sh
 	}
 }
 
-/*************************************************************
-*@brief【描述】
-*@author mdq
-*@date   2023-11-09
-*@note 【备注】
-*************************************************************/
+/**
+ * @brief CAN模块的超时复位处理
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-07-28
+ * @copyright Copyright (c) 2024
+ */
 void Cf_CanResetDeal(void)
 {
-	//Cf_CopOnlineJudge();
+
+
+
+
+
+
+
 }
 
-/* void Cf_PackFrm100Ide60Fdoor(unsigned char * puc_data)
-{
-	puc_data[0] = ;
-	puc_data[1] = 0;
-	puc_data[2] = 0x60; 
-	puc_data[3] = 0xFF;
-	puc_data[4] = cfDoor[0].cop_out_lamp[0];
-	puc_data[5] = 0x01;
-	puc_data[6] = 0;
-	puc_data[7] = 0;
-} */
