@@ -23,7 +23,7 @@ void ObjCan_ParaInit(void)
  */
 void ObjCan_MainDeal(void)
 {
-	unsigned short i,m,us_sendCycle;
+	unsigned short i=0, m=0;
     
 	for(m=0;m<4;m++)
 	{
@@ -32,7 +32,7 @@ void ObjCan_MainDeal(void)
 			st_cf_rcecFrame.COB_ID = ul_phyCan_rxId[m];
 			st_cf_rcecFrame.uc_exId = uc_phyCan_exId[m];
 			st_cf_rcecFrame.DLC = uc_phyCan_rxLen[m];
-			for(i=0;i<st_cf_rcecFrame.DLC;i++)
+			for(i=0; i<st_cf_rcecFrame.DLC; i++)
 			{
 				st_cf_rcecFrame.Data[i] = uc_phyCan_rxMessage[m][i];
 			}
@@ -40,16 +40,15 @@ void ObjCan_MainDeal(void)
 		}
 	}
 	us_cf_canSendTimer += CF_2MS;
-    us_sendCycle = CF_10MS;
     
-	if(us_cf_canSendTimer>=us_sendCycle)
+	if(us_cf_canSendTimer >= CF_10MS)
 	{
 		us_cf_canSendTimer=0;
 		Cf_CanTxDeal();
 		if(us_cf_needSend)
 		{
 			us_cf_needSend = 0;
-			physical_can_send(st_cf_sendFrame.COB_ID,st_cf_sendFrame.uc_exId,st_cf_sendFrame.DLC,st_cf_sendFrame.Data);
+			physical_can_send(st_cf_sendFrame.COB_ID, st_cf_sendFrame.uc_exId, st_cf_sendFrame.DLC, st_cf_sendFrame.Data);
 		}
 	}
 
@@ -70,10 +69,8 @@ void ObjCan_MainDeal(void)
  */
 void Cf_CanStdRxDeal(void)
 {
-	if(st_cf_rcecFrame.COB_ID==0x180)
-	{
-
-	}
+	if(st_cf_rcecFrame.COB_ID == 0x100)
+	{}
 }
 
 
@@ -87,25 +84,7 @@ void Cf_CanStdRxDeal(void)
 void Cf_CanExtRxDeal(void)
 {
 	if(st_cf_rcecFrame.COB_ID == 0x37FF)
-	{
-
-	}
-}
-
-
-/**
- * @brief 事件帧判断
- * @version 1.0
- * @author MAO (mao_deqiang@126.com)
- * @date 2024-07-28
- * @copyright Copyright (c) 2024
- */
-void Cf_CanEvtChk(void)
-{
-
-
-
-
+	{}
 }
 
 
@@ -130,6 +109,19 @@ void Cf_CanTxDeal(void)
 
 
 /**
+ * @brief 查询是否有事件帧
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-07-28
+ * @copyright Copyright (c) 2024
+ */
+void Cf_CanEvtChk(void)
+{
+	Cf_InsertReqList(FRM100IDE60_FDOOR, 0x99, 0xF8, 0, 1, CF_200MS);
+}
+
+
+/**
  * @brief CAN周期帧处理
  * @version 1.0
  * @author MAO (mao_deqiang@126.com)
@@ -146,22 +138,6 @@ void Cf_TxIdCycle(void)
 		case 0:
 		{
 			break;	
-		}
-		case 1:
-		{
-			break;				
-		}
-		case 2:
-		{
-			break;		
-		}
-		case 3:
-		{
-			break;		
-		}
-		case 4:	
-		{	
-			break;
 		}
 		default:
 			break;
@@ -180,12 +156,12 @@ void Cf_TxIdCycle(void)
  */
 void Cf_EvtWaitTimeInc(void)
 {
-	unsigned short i;
+	unsigned short i=0;
 	unsigned short us_waitPercentTmp = 0;
 
 	us_cf_insertWaitLongest = 0xffff;
 	
-	for(i=0; i<CF_INSERT_MAX1; i++ )
+	for(i=0; i<CF_INSERT_MAX1; i++)
 	{
 		if(st_cf_insertReq[i].ul_funId)
 		{
@@ -248,10 +224,10 @@ void Cf_TxIdJudge(void)
 		{
 			st_cf_sendFrame.ul_funId = st_cf_cycleTxId.ul_funId;
 			st_cf_sendFrame.us_subId = st_cf_cycleTxId.us_subId;
-			if((st_cf_sendFrame.ul_funId==0x1fff)||(st_cf_sendFrame.ul_funId==0x5fff))   //A02.3-CR028
+			if((st_cf_sendFrame.ul_funId==0x1fff)||(st_cf_sendFrame.ul_funId==0x5fff))
 				st_cf_sendFrame.uc_exId = 1;
 			else
-				st_cf_sendFrame.uc_exId = 0;    //其余均为标准帧
+				st_cf_sendFrame.uc_exId = 0;
 			st_cf_cycleTxId.ul_funId =0;
 			st_cf_cycleTxId.us_subId =0;
 		}
@@ -278,9 +254,10 @@ void Cf_TxIdJudge(void)
  */
 void Cf_CanTxData(void)
 {
-	unsigned short i;
+	unsigned short i=0;
 	
 	st_cf_sendFrame.COB_ID = st_cf_sendFrame.ul_funId;
+
 	for(i=0; i<8; i++)
 		st_cf_sendFrame.Data[i] = 0;
 

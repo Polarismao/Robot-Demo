@@ -64,7 +64,7 @@ extern unsigned short timerTickerHalfMsOld;
 extern unsigned short timerTicker1msOld;
 extern unsigned short timerTicker2msOld;
 
-/*****************************************CANÄ£ï¿½ï¿½*******************************************/
+/*****************************************CANÄ£¿é*******************************************/
 typedef struct
 {
 	unsigned long COB_ID;
@@ -73,7 +73,6 @@ typedef struct
 	unsigned char Data[8];
 	unsigned long ul_funId;
 	unsigned short us_subId;
-	unsigned short us_doorType;
 	unsigned char uc_tgtAddr;
 }CF_CAN;
 
@@ -100,6 +99,7 @@ extern unsigned char uc_phyCan_rxFlag[4];
 
 void delay_ms(unsigned long ul_nms);
 void delay_us(unsigned long ul_nus);
+
 
 #endif
 
