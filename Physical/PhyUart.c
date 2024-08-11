@@ -1,14 +1,13 @@
 #include "PhyPublic.h"
 #include "PhyUart.h"
 
-
-/**
+/*************************************************
  * @brief 串口物理层配置
  * @version 1.0
  * @author MAO (mao_deqiang@126.com)
- * @date 2024-07-28
+ * @date 2024-08-04
  * @copyright Copyright (c) 2024
- */
+ *************************************************/
 void USART_Config(unsigned char uart_nub,unsigned char uart_mode,unsigned char uart_Baut,unsigned char slave_mode)
 {
 	GPIO_InitTypeDef	GPIO_InitStructure;
@@ -65,16 +64,14 @@ void USART_Config(unsigned char uart_nub,unsigned char uart_mode,unsigned char u
 	} 
 }
 
-/*************************************************************
-*@brief【描述】
-*@param  uart_nub    【参数注释】
-*@param  uart_state  【参数注释】
-*@param  sci_uart_data【参数注释】
-*@param  sci_usart_lenth【参数注释】
-*@author mdq
-*@date   2023-11-19
-*@note 【备注】
-*************************************************************/
+
+/*************************************************
+ * @brief 
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-08-04
+ * @copyright Copyright (c) 2024
+ *************************************************/
 void Usart_Send_Deal(unsigned chara uart_nub,unsigned char uart_state,unsigned char *sci_uart_data,unsigned char sci_usart_lenth)
 {
 	unsigned char i;
@@ -85,14 +82,14 @@ void Usart_Send_Deal(unsigned chara uart_nub,unsigned char uart_state,unsigned c
 		usart_lenth = sci_usart_lenth;
 		for(i=0;i<sci_usart_lenth;i++)
 		{
-			Usart_trans_data[i] = *sci_uart_data++;			
+			Usart_trans_data[i] = *sci_uart_data++;		
 		}
 		usart_trans_len = 0;
 
 		if(uart_nub==1)
 			GPIO_SetBits(GPIOA, GPIO_Pin_1);
 
-		USART_SendData(USART1, Usart_trans_data[usart_trans_len]); 	
+		USART_SendData(USART1, Usart_trans_data[usart_trans_len]);
 		USART_ITConfig(USART1, USART_IT_TC, ENABLE);
 	}
 	else if(uart_state==1)
@@ -102,15 +99,14 @@ void Usart_Send_Deal(unsigned chara uart_nub,unsigned char uart_state,unsigned c
 	}
 }
 
-/*************************************************************
-*@brief【描述】
-*@param  uart_nub    【参数注释】
-*@param  uart_mode   【参数注释】
-*@param  uart_enable 【参数注释】
-*@author mdq
-*@date   2023-11-19
-*@note 【备注】
-*************************************************************/
+
+/*************************************************
+ * @brief 
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-08-04
+ * @copyright Copyright (c) 2024
+ *************************************************/
 void PhyUart_ITConfig(unsigned char uart_nub,unsigned char uart_mode, unsigned char uart_enable)
 {
     USART_TypeDef * usart_periph = USART1;
@@ -145,12 +141,13 @@ void PhyUart_ITConfig(unsigned char uart_nub,unsigned char uart_mode, unsigned c
 }
 
 
-/*************************************************************
-*@brief【描述】
-*@author mdq
-*@date   2023-11-26
-*@note 【备注】
-*************************************************************/
+/*************************************************
+ * @brief 
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-08-04
+ * @copyright Copyright (c) 2024
+ *************************************************/
 void USART1_IRQHandler(void)
 {     
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)    //接收数据 
@@ -190,3 +187,6 @@ void USART1_IRQHandler(void)
 		USART_ClearFlag(USART1,USART_FLAG_ORE|USART_FLAG_NE|USART_FLAG_FE|USART_FLAG_PE|USART_FLAG_IDLE);				
 	}
 }
+
+
+

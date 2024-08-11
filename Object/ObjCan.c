@@ -245,13 +245,13 @@ void Cf_TxIdJudge(void)
 	}
 }
 
-/**
+/*************************************************
  * @brief 发送CAN帧内容
  * @version 1.0
  * @author MAO (mao_deqiang@126.com)
- * @date 2024-07-28
+ * @date 2024-08-04
  * @copyright Copyright (c) 2024
- */
+ *************************************************/
 void Cf_CanTxData(void)
 {
 	unsigned short i=0;
@@ -310,13 +310,13 @@ void Cf_InsertReqList(unsigned short us_index,unsigned long ul_funId,unsigned sh
 	}
 }
 
-/**
+/*************************************************
  * @brief CAN模块的超时复位处理
  * @version 1.0
  * @author MAO (mao_deqiang@126.com)
- * @date 2024-07-28
+ * @date 2024-08-04
  * @copyright Copyright (c) 2024
- */
+ *************************************************/
 void Cf_CanResetDeal(void)
 {
 

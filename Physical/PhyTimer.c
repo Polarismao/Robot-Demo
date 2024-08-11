@@ -1,13 +1,14 @@
 #include "PhyTimer.h"
 
-/*************************************************************
-*@brief【描述】
-*@author mdq
-*@date   2023-11-26
-*@note 【备注】
-*************************************************************/
+/*************************************************
+ * @brief 
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-08-04
+ * @copyright Copyright (c) 2024
+ *************************************************/
 void Timer_Init(void)
-{   //可参考库函数tim.c、tim.h，这里我们初始化TIM2（通用定时器）
+{
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE );   //使用APB1的开启时钟函数，因为TIM2位APB1总线的外设
     TIM_InternalClockConfig(TIM2);                         //选择内部时钟，一般默认就是内部可省
 
@@ -35,13 +36,13 @@ void Timer_Init(void)
 }
 
 
-
-/*************************************************************
-*@brief【描述】
-*@author mdq
-*@date   2023-11-23
-*@note 【备注】
-*************************************************************/
+/*************************************************
+ * @brief 
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-08-04
+ * @copyright Copyright (c) 2024
+ *************************************************/
 void TIM2_IRQHandler(void)
 {
     static unsigned char uc_timerCnt2 = 0;
@@ -79,3 +80,7 @@ void TIM2_IRQHandler(void)
         }
     }
 }
+
+
+
+

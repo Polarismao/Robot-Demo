@@ -8,7 +8,7 @@ unsigned short us_pwmSet = 0;
 
 int main(void)
 {
-    System_init();      //MCU系统初始化
+    System_Init();      //MCU系统初始化
     ObjModul_Init();    //对象层模块初始化
     baseTime = GetTime();
     while(1)
@@ -28,30 +28,33 @@ int main(void)
     }
 }
 
-/*************************************************************
-*@brief【对象层模块初始化】
-*@author mdq
-*@date   2023-11-10
-*@note 【备注】
-*************************************************************/
+
+/**
+ * @brief 对象层模块初始化
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-08-04
+ * @copyright Copyright (c) 2024
+ */
 void ObjModul_Init(void)
 {
     ObjPCA_ParaInit();
 	ObjCan_ParaInit();
 	Obj232_ParaInit();
-	Delay_init();
-
+	Delay_Init();
 }
 
-/*************************************************************
-*@brief【2ms时序】
-*@author mdq
-*@date   2023-11-10
-*@note 【备注】
-*************************************************************/
+
+/**
+ * @brief 2ms时序
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-08-04
+ * @copyright Copyright (c) 2024
+ */
 void LgMain_2msDeal(void)
 {
-    unsigned short us_step;
+    unsigned short us_step = 0;
 	ObjPCA_servoAngleSet(15, us_pwmSet);
 	
 	switch(us_step)
@@ -91,12 +94,13 @@ void LgMain_2msDeal(void)
 	}	
 }
 
-/*************************************************************
-*@brief【描述】
-*@author mdq
-*@date   2023-11-10
-*@note 【备注】
-*************************************************************/
+/**
+ * @brief 
+ * @version 1.0
+ * @author MAO (mao_deqiang@126.com)
+ * @date 2024-08-04
+ * @copyright Copyright (c) 2024
+ */
 void TimerDeal(void)
 {   //软件定时器
 	timerTicker++;
@@ -113,4 +117,5 @@ void TimerDeal(void)
 	}
 	bTimerHalfMs = 1;
 }
+
 

@@ -3,7 +3,7 @@
 
 static BOOL b_obj232_moduleActive = true;
 
-/**
+/*************************************************
  * @brief 232模块初始化
  * @version 1.0
  * @author MAO (mao_deqiang@126.com)
@@ -16,7 +16,7 @@ void Obj232_ParaInit(void)
 
 }
 
-/**
+/*************************************************
  * @brief 232模块激活处理
  * @version 1.0
  * @author MAO (mao_deqiang@126.com)
@@ -28,7 +28,7 @@ void Obj232_ModuleStatus(BOOL b_actStatus)
     b_obj232_moduleActive = b_actStatus;
 }
 
-/**
+/*************************************************
  * @brief 232模块主逻辑
  * @version 1.0
  * @author MAO (mao_deqiang@126.com)
@@ -42,7 +42,7 @@ void Obj232_MainDeal(void)
 
 }
 
-/**
+/*************************************************
  * @brief 232模块CRC校验
  * @version 1.0
  * @author MAO (mao_deqiang@126.com)

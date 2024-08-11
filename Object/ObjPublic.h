@@ -41,7 +41,6 @@
 #define CF_24H    (86400000) //24H
 
 
-/**************************ï¿½Â¼ï¿½Ö¡*****************************/
 #define	 FRM100IDE60_FDOOR		   		0
 #define	 FRM100IDE61_FDOOR		   		1
 #define	 FRM100IDE62_FDOOR		   		2
@@ -64,7 +63,6 @@ extern unsigned short timerTickerHalfMsOld;
 extern unsigned short timerTicker1msOld;
 extern unsigned short timerTicker2msOld;
 
-/*****************************************CANÄ£¿é*******************************************/
 typedef struct
 {
 	unsigned long COB_ID;
@@ -97,8 +95,7 @@ extern unsigned char uc_phyCan_rxLen[4];
 extern unsigned char uc_phyCan_rxMessage[4][8];	
 extern unsigned char uc_phyCan_rxFlag[4];
 
-void delay_ms(unsigned long ul_nms);
-void delay_us(unsigned long ul_nus);
+
 
 
 #endif
